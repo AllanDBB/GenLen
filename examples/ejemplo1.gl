@@ -1,0 +1,10 @@
+// ejemplo1.gl - Declarar y transcribir una secuencia
+// Ejemplo 1 de la gramática GenLen
+
+lab Ejemplo1
+/\
+    muestra gen1 : adn = adn 'ATGCGT';
+    muestra arn1 : arn;
+
+    arn1 = gen1->transcribir();
+\/

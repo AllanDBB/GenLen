@@ -1,0 +1,1 @@
+# GenLen - Explorador Léxico (Scanner)

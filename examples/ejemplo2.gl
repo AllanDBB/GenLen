@@ -1,0 +1,20 @@
+// ejemplo2.gl - Protocolo que edita, transcribe y traduce
+// Ejemplo 3 de la gramática GenLen
+
+lab Ejemplo3
+/\
+    muestra genBase   : adn = adn 'ATGGCCTAGCTA';
+    muestra resultado : prot;
+
+    protocolo editarYTraducir(g: adn, corte: adn)
+    /\
+        muestra editado   : adn;
+        muestra mensajero : arn;
+
+        editado   = g->cas9(corte);
+        mensajero = editado->transcribir();
+        mensajero->traducir();
+    \/
+
+    resultado = editarYTraducir(genBase, adn 'TAGCTA');
+\/

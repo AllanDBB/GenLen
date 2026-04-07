@@ -1,0 +1,25 @@
+// errores.gl - Archivo con errores léxicos intencionales
+// Usado para demostrar el manejo de errores del explorador
+
+lab LabErrores
+/\
+    // Error 1: nucleótido inválido en cadena ADN (X, Z no son A/G/C/T)
+    muestra mala1 : adn = adn 'ATXYZ';
+
+    // Error 2: carácter '@' no existe en GenLen
+    muestra mala2 : num = @5;
+
+    // Error 3: T no es válido en ARN (ARN usa A/U/C/G)
+    muestra mala3 : arn = arn 'ATGCGT';
+
+    // Error 4: cadena genética vacía
+    muestra mala4 : adn = adn '';
+
+    // Error 5: cadena no cerrada (falta la comilla de cierre)
+    muestra mala5 : adn = adn 'ATGCGT
+
+    // Error 6: carácter '!' solo (no es '!=')
+    muestra x : num = 5;
+    muestra y : num = 3;
+    muestra z : num = x ! y;
+\/

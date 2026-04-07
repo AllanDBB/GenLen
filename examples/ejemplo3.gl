@@ -1,0 +1,36 @@
+// ejemplo3.gl - Operadores matemáticos, booleanos y protocolos completos
+// Cubre: num, operadores aritméticos, comparación, booleanos V/F, y/o
+
+lab Ejemplo5
+/\
+    // Declaraciones numéricas
+    muestra a         : num = 10;
+    muestra b         : num = 3;
+    muestra resultado : num;
+
+    // Expresión aritmética con precedencia
+    resultado = (a + b) * 2 - (a / b);
+
+    // Cadena dogma central: ADN → ARN → Proteína encadenado
+    muestra genOriginal    : adn  = adn  'ATGGCCATTGTA';
+    muestra proteinaFinal  : prot;
+
+    proteinaFinal = genOriginal->transcribir()->traducir();
+
+    // Expresión booleana con operadores lógicos
+    muestra flag1 : num = 5;
+    muestra flag2 : num = 10;
+    muestra ok    : num;
+
+    ok = (flag1 < flag2) y (flag2 > 0);
+
+    // Uso de booleano literal
+    muestra activo : num = V;
+    muestra pasivo : num = F;
+
+    // Alineamiento de dos secuencias ADN
+    muestra secA : adn = adn 'ATGCTGT';
+    muestra secB : adn = adn 'ATGAGT';
+
+    secA->alinear(secB);
+\/
