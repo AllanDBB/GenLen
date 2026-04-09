@@ -1,0 +1,30 @@
+// ejemplo4.gl - ARN valido, proteina con prefijo, mutar, igualdad, decimal, bool
+// Cubre: arn literal, prot literal con prefijo, mutar, ==, !=, num decimal, bool
+
+lab Ejemplo4
+/\
+    // Cadena ARN valida con prefijo explicito
+    muestra mensajero : arn = arn 'AUCGAUCG';
+
+    // Cadena proteina con prefijo explicito prot
+    muestra proteina : prot = prot 'MKLVTA';
+
+    // Literal numerico decimal
+    muestra tasa : num = 3.14;
+
+    // Tipo bool
+    muestra activo : bool;
+
+    // Operador de mutacion
+    muestra genBase : adn = adn 'ATGCGT';
+    muestra genMutado : adn;
+
+    genMutado = genBase->mutar();
+
+    // Comparacion de igualdad
+    muestra iguales : num;
+    muestra distintos : num;
+
+    iguales   = (tasa == 3.14);
+    distintos = (tasa != 2.71);
+\/

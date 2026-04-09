@@ -1,0 +1,34 @@
+// ejemplo5.gl - Comparaciones relacionales, modulo, modelar, docking, inferencia
+// Cubre: >=, <=, %, modelar, docking, cadena inferida sin prefijo de tipo
+
+lab Ejemplo5
+/\
+    // Comparaciones relacionales >= y <=
+    muestra x : num = 10;
+    muestra y : num = 10;
+    muestra mayorOIgual : num;
+    muestra menorOIgual : num;
+
+    mayorOIgual = (x >= y);
+    menorOIgual = (x <= y);
+
+    // Operador modulo
+    muestra resto : num;
+
+    resto = (x % 3);
+
+    // Cadena proteina inferida sin prefijo de tipo
+    muestra protInferida : prot;
+
+    protInferida = 'MKLV';
+
+    // Mecanismo modelar sobre una proteina
+    muestra modelo : prot;
+
+    modelo = protInferida->modelar();
+
+    // Mecanismo docking entre dos proteinas
+    muestra sitio : prot = prot 'ACDE';
+
+    sitio->docking(modelo);
+\/

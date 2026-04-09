@@ -1,0 +1,28 @@
+// ejemplo6.gl - Protocolo con tres parametros, encadenamiento, mutar + cas9
+// Cubre: protocolo con 3 params, llamada encadenada de protocolos, mutar y cas9 combinados
+
+lab Ejemplo6
+/\
+    muestra genInicial  : adn = adn 'ATGGCCATTGTA';
+    muestra corte1      : adn = adn 'ATGG';
+    muestra corte2      : adn = adn 'ATTG';
+    muestra resultado   : prot;
+
+    // Protocolo con tres parametros
+    protocolo procesarGen(g: adn, c1: adn, c2: adn)
+    /\
+        muestra editado1  : adn;
+        muestra editado2  : adn;
+        muestra mutado    : adn;
+        muestra mensajero : arn;
+
+        editado1  = g->cas9(c1);
+        editado2  = editado1->cas9(c2);
+        mutado    = editado2->mutar();
+        mensajero = mutado->transcribir();
+        mensajero->traducir();
+    \/
+
+    // Llamada al protocolo encadenando resultado
+    resultado = procesarGen(genInicial, corte1, corte2);
+\/
