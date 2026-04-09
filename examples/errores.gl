@@ -22,4 +22,11 @@ lab LabErrores
     muestra x : num = 5;
     muestra y : num = 3;
     muestra z : num = x ! y;
+
+    // Error 7: barra invertida sola (no es el cierre de bloque '\/')
+    muestra mala6 : num = 1 \ 2;
+
+    // Error 8: cadena genetica inferida con caracteres invalidos (no son ADN/ARN/PROT)
+    muestra mala7 : adn;
+    mala7 = '123XZ';
 \/
