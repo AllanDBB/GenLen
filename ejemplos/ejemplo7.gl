@@ -1,0 +1,16 @@
+// ejemplo7.gl - Demostración del operador lógico "o"
+// Cubre: operador "o", expresiones booleanas con paréntesis
+
+lab Ejemplo7
+/\
+    muestra temp : num = 37;
+    muestra presion : num = 120;
+    muestra alerta : num;
+    
+    // Alerta si hay fiebre O presion alta
+    alerta = (temp > 38) o (presion > 130);
+    
+    // Expresión con y/o combinados
+    muestra riesgo : num;
+    riesgo = (temp > 39) y (presion > 140) o (temp > 38) y (presion > 135);
+\/

@@ -19,9 +19,9 @@ GenLen/
 │
 ├── tests/
 │   ├── __init__.py
-│   └── test_scanner.py       # Pruebas unitarias del explorador
+│   └── test_explorador.py       # Pruebas unitarias del explorador
 │
-├── examples/
+├── ejemplos/
 │   ├── ejemplo1.gl           # Declarar y transcribir una secuencia ADN
 │   ├── ejemplo2.gl           # Protocolo con edición CRISPR y traducción
 │   ├── ejemplo3.gl           # Operadores, booleanos y llamadas encadenadas
@@ -36,7 +36,7 @@ GenLen/
 ## Uso
 
 ```bash
-python main.py examples/ejemplo1.gl
+python main.py ejemplos/ejemplo1.gl
 ```
 
 El explorador imprime cada token en el formato:
@@ -61,7 +61,7 @@ El explorador imprime cada token en el formato:
 ```bash
 python -m pytest tests/ -v
 # o con unittest directamente:
-python -m unittest tests/test_scanner.py -v
+python -m unittest tests/test_explorador.py -v
 ```
 
 ---

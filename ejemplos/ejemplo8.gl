@@ -1,0 +1,17 @@
+// ejemplo8.gl - Llamadas encadenadas complejas
+// Cubre: encadenamiento de múltiples mecanismos
+
+lab Ejemplo8
+/\
+    muestra genOriginal : adn = adn 'ATGGCCTAGCTACGT';
+    muestra corte : adn = adn 'TAGC';
+    muestra resultado : prot;
+    
+    // Cadena completa: CRISPR -> Mutar -> Transcripcion -> Traduccion
+    resultado = genOriginal->cas9(corte)->mutar()->transcribir()->traducir();
+    
+    // Comparación de dos proteínas
+    muestra otra : prot = prot 'MKLV';
+    muestra iguales : num;
+    iguales = (resultado == otra);
+\/

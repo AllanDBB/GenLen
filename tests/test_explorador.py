@@ -7,7 +7,7 @@ Cubre:
   - Literales numéricos (entero y decimal)
   - Cadenas genéticas (ADN, ARN, PROTEÍNA) y su validación
   - Operadores de uno y dos caracteres
-  - Delimitadores de bloque /\ y \/
+    - Delimitadores de bloque /\\ y \\/
   - Comentarios (deben ser ignorados)
   - Booleanos V y F
   - Mecanismos biológicos
@@ -19,6 +19,20 @@ Curso: Compiladores e Intérpretes
 
 import sys
 import os
+
+
+# Banner que se muestra al correr las pruebas
+BANNER = r"""
+                                _.-;;-._
+                        '-..-'|   ||   |
+                        '-..-'|_.-;;-._|
+                        '-..-'|   ||   |
+                        '-..-'|_.-''-._|
+
+                GenLen - Pruebas Unitarias
+"""
+
+print(BANNER)
 
 # Agregar el directorio raíz al path para poder importar src
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))

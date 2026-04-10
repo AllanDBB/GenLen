@@ -5,13 +5,7 @@ Uso:
     python main.py <archivo.gl>
 
 Ejemplo:
-    python main.py examples/ejemplo1.gl
-
-Salida:
-    Imprime en pantalla cada token en el formato:
-    <"TIPO", "lexema", "linea: N, columna: M">
-
-    Al final imprime un resumen de errores léxicos, si los hay.
+    python main.py ejemplos/ejemplo1.gl
 
 GenLen - Lenguaje Genético
 Curso: Compiladores e Intérpretes
@@ -24,11 +18,29 @@ from src.explorador import Explorador
 from src.token import TipoToken
 
 
+def mostrar_banner() -> None:
+    """
+    Muestra un banner ASCII art al iniciar el programa.
+    """
+    banner = r"""
+                                _.-;;-._
+                        '-..-'|   ||   |
+                        '-..-'|_.-;;-._|
+                        '-..-'|   ||   |
+                        '-..-'|_.-''-._|
+
+                    Explorador Lexico de GenLen
+                   Compiladores e Interpretes - TEC
+    """
+    print(banner)
+    print()
+
+
 def escanear_archivo(ruta: str) -> int:
     """
     Lee un archivo GenLen, lo escanea y muestra los tokens en pantalla.
 
-    Retorna el código de salida: 0 si no hay errores, 1 si hay errores léxicos.
+    Retorna el codigo de salida: 0 si no hay errores, 1 si hay errores lexicos.
     """
     if not os.path.isfile(ruta):
         print(f"Error: el archivo '{ruta}' no existe.", file=sys.stderr)
@@ -40,29 +52,37 @@ def escanear_archivo(ruta: str) -> int:
     explorador = Explorador(fuente)
     tokens = explorador.escanear()
 
-    # Imprimir todos los tokens (excepto EOF) en el formato de la especificación
-    print(f"=== Tokens de: {ruta} ===\n")
+    # Imprimir los tokens en el formato de la especificacion
+    print(f"Analizando: {ruta}\n")
+    print("┌" + "─" * 78 + "┐")
+    print("│ {:^76} │".format("TOKENS"))
+    print("├" + "─" * 78 + "┤")
+    
     for tok in tokens:
         if tok.tipo == TipoToken.EOF:
             continue
-        print(tok)
+        print(f"│ {str(tok):<76} │")
+    
+    print("└" + "─" * 78 + "┘")
 
-    # Mostrar un resumen de errores léxicos
+    # Mostrar resumen de errores lexicos
     if explorador.errores:
-        print(f"\n=== {len(explorador.errores)} error(es) léxico(s) ===\n")
+        print(f"\n{len(explorador.errores)} error(es) lexico(s) encontrados:\n")
         for err in explorador.errores:
-            print(err, file=sys.stderr)
+            print(f"   {err}")
         return 1
 
-    print(f"\n=== Escaneo completado sin errores ({len(tokens) - 1} tokens) ===")
+    print(f"\nEscaneo completado sin errores ({len(tokens) - 1} tokens)")
     return 0
 
 
 def main() -> None:
     """Punto de entrada principal."""
+    mostrar_banner()
+    
     if len(sys.argv) < 2:
-        print("Uso: python main.py <archivo.gl>", file=sys.stderr)
-        print("Ejemplo: python main.py examples/ejemplo1.gl", file=sys.stderr)
+        print("Uso: python main.py <archivo.gl>")
+        print("Ejemplo: python main.py ejemplos/ejemplo1.gl")
         sys.exit(1)
 
     ruta = sys.argv[1]
