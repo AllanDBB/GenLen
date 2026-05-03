@@ -5,12 +5,12 @@ lab Ejemplo5
 /\
     // Comparaciones relacionales >= y <=
     muestra x : num = 10;
-    muestra y : num = 10;
+    muestra b : num = 10;
     muestra mayorOIgual : num;
     muestra menorOIgual : num;
 
-    mayorOIgual = (x >= y);
-    menorOIgual = (x <= y);
+    mayorOIgual = (x >= b);
+    menorOIgual = (x <= b);
 
     // Operador modulo
     muestra resto : num;

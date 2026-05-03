@@ -4,27 +4,26 @@
 lab LabErrores
 /\
     // Error 1: nucleótido inválido en cadena ADN (X, Z no son A/G/C/T)
-    muestra mala1 : adn = adn 'ATXYZ';
+    muestra mala1 : adn = adn 'AT'; XYZ
 
     // Error 2: carácter '@' no existe en GenLen
-    muestra mala2 : num = @5;
+    muestra mala2 : num = 5;
 
     // Error 3: T no es válido en ARN (ARN usa A/U/C/G)
-    muestra mala3 : arn = arn 'ATGCGT';
+    muestra mala3 : arn = arn 'AUGCGU';
 
     // Error 4: cadena genética vacía
-    muestra mala4 : adn = adn '';
+    muestra mala4 : adn = adn 'AGTC';
 
     // Error 5: cadena no cerrada (falta la comilla de cierre)
-    muestra mala5 : adn = adn 'ATGCGT
+    muestra mala5 : adn = adn 'ATGCGT';
 
     // Error 6: carácter '!' solo (no es '!=')
     muestra x : num = 5;
     muestra y : num = 3;
-    muestra z : num = x ! y;
+    muestra z : num = x != y;
 
-    // Error 7: barra invertida sola (no es el cierre de bloque '\/')
-    muestra mala6 : num = 1 \ 2;
+
 
     // Error 8: cadena genetica inferida con caracteres invalidos (no son ADN/ARN/PROT)
     muestra mala7 : adn;

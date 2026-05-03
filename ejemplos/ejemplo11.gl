@@ -1,0 +1,45 @@
+// ejemplo11.gl - Composición de protocolos (un protocolo reutilizado desde otro)
+// Cubre: múltiples definiciones de protocolo, llamadas entre protocolos, parámetros
+
+lab ComposicionProtocolos
+/\
+    // ── Protocolo base: dogma central (ADN → proteína) ──────────────────
+    protocolo dogmaCentral(entrada : adn)
+    /\
+        muestra arnIntermedio : arn;
+        muestra resultado     : prot;
+
+        arnIntermedio = entrada->transcribir();
+        resultado     = arnIntermedio->traducir();
+    \/
+
+    // ── Protocolo de edición: mutar y aplicar CRISPR ────────────────────
+    protocolo editarGen(gen : adn, guia : adn)
+    /\
+        muestra genEditado : adn;
+        muestra arnGuia    : arn;
+
+        arnGuia    = guia->transcribir();
+        genEditado = gen->cas9(arnGuia);
+    \/
+
+    // ── Protocolo de análisis completo: edición + expresión ─────────────
+    protocolo analizarExpresion(secuencia : adn, guia : adn)
+    /\
+        muestra editada   : adn;
+        muestra proteina  : prot;
+        muestra modelada  : prot;
+
+        editarGen(secuencia, guia);
+        dogmaCentral(secuencia);
+
+        modelada = proteina->modelar();
+        modelada->docking(editada);
+    \/
+
+    // ── Programa principal ───────────────────────────────────────────────
+    muestra gen1  : adn = adn 'ATGCGTCAGTTG';
+    muestra guia1 : adn = adn 'CGTAGC';
+
+    analizarExpresion(gen1, guia1);
+\/

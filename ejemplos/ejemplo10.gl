@@ -1,0 +1,46 @@
+// ejemplo10.gl - Clasificación con lógica booleana compleja
+// Cubre: condiciones compuestas con y/o, variables bool, num, comparaciones
+
+lab ClasificacionMuestras
+/\
+    // Parámetros de la muestra de laboratorio
+    muestra temperatura : num = 37;
+    muestra presion     : num = 101;
+    muestra ph          : num = 7;
+    muestra contaminada : bool = F;
+
+    // Rangos válidos para el experimento
+    muestra tempMin : num = 35;
+    muestra tempMax : num = 40;
+    muestra presMin : num = 95;
+    muestra presMax : num = 110;
+    muestra phMin   : num = 6;
+    muestra phMax   : num = 8;
+
+    // Evaluaciones individuales
+    muestra tempOk   : bool;
+    muestra presOk   : bool;
+    muestra phOk     : bool;
+    muestra limpia   : bool;
+
+    tempOk = (temperatura >= tempMin) y (temperatura <= tempMax);
+    presOk = (presion >= presMin) y (presion <= presMax);
+    phOk   = (ph >= phMin) y (ph <= phMax);
+    limpia = (contaminada == F);
+
+    // Clasificación final: muestra apta para análisis
+    muestra aptaParaAnalisis : bool;
+    aptaParaAnalisis = tempOk y presOk y phOk y limpia;
+
+    // Clasificación de riesgo: fuera de rango o contaminada
+    muestra esRiesgosa : bool;
+    esRiesgosa = (contaminada == V) o (ph < phMin) o (ph > phMax);
+
+    // Protocolo de análisis genético si la muestra es apta
+    muestra genMuestra : adn = adn 'ATGCTTGACCGA';
+    muestra arnMuestra : arn;
+    muestra protMuestra : prot;
+
+    arnMuestra  = genMuestra->transcribir();
+    protMuestra = arnMuestra->traducir();
+\/

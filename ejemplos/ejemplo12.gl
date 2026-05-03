@@ -1,0 +1,81 @@
+// ejemplo12.gl - Pipeline genético completo
+// Cubre: todos los tipos, todos los mecanismos, aritmética, booleanos, protocolos
+
+lab PipelineGenetico
+/\
+    // ── Constantes del experimento ────────────────────────────────────────
+    muestra TAM_GEN      : num = 120;
+    muestra TAM_MIN      : num = 50;
+    muestra TAM_MAX      : num = 200;
+    muestra TASA_MUTACION: num = 0.05;
+    muestra UMBRAL_DOCK  : num = 75;
+
+    // ── Muestras biológicas iniciales ─────────────────────────────────────
+    muestra genOrigen  : adn  = adn  'ATGCGTCAGTTGACCGTAGCTTGA';
+    muestra guiaCrispr : adn  = adn  'CGTAGCT';
+    muestra arnOrigen  : arn  = arn  'AUGCGUCAGUUGA';
+    muestra protBase   : prot = prot 'MRQL';
+
+    // ── Variables de resultado ────────────────────────────────────────────
+    muestra arnTranscrito  : arn;
+    muestra protTraducida  : prot;
+    muestra genMutado      : adn;
+    muestra arnEditado     : arn;
+    muestra protEditada    : prot;
+    muestra protModelada   : prot;
+
+    // ── Validación de tamaño ──────────────────────────────────────────────
+    muestra tamanoValido : bool;
+    muestra tamanoScore  : num;
+
+    tamanoScore  = TAM_GEN * 100 / TAM_MAX;
+    tamanoValido = (TAM_GEN >= TAM_MIN) y (TAM_GEN <= TAM_MAX);
+
+    // ── Protocolo de expresión génica ─────────────────────────────────────
+    protocolo expresarGen(gen : adn)
+    /\
+        muestra transcrito : arn;
+        muestra proteina   : prot;
+
+        transcrito = gen->transcribir();
+        proteina   = transcrito->traducir();
+    \/
+
+    // ── Protocolo de edición CRISPR ───────────────────────────────────────
+    protocolo editarConCrispr(blanco : adn, guia : adn)
+    /\
+        muestra arnGuia   : arn;
+        muestra resultado : adn;
+
+        arnGuia   = guia->transcribir();
+        resultado = blanco->cas9(arnGuia)->mutar();
+    \/
+
+    // ── Ejecución del pipeline ────────────────────────────────────────────
+
+    // Paso 1: dogma central clásico
+    arnTranscrito = genOrigen->transcribir();
+    protTraducida = arnTranscrito->traducir();
+
+    // Paso 2: mutación y edición CRISPR
+    genMutado  = genOrigen->mutar();
+    arnEditado = genMutado->transcribir();
+    editarConCrispr(genOrigen, guiaCrispr);
+
+    // Paso 3: expresión de la versión editada
+    expresarGen(genMutado);
+
+    // Paso 4: modelado y docking molecular
+    protModelada = protTraducida->modelar();
+    protModelada->docking(protBase);
+
+    // Paso 5: alineamiento final para validar conservación
+    genOrigen->alinear(genMutado);
+
+    // ── Métricas finales ──────────────────────────────────────────────────
+    muestra scoreTotal : num;
+    muestra apto       : bool;
+
+    scoreTotal = tamanoScore - (TASA_MUTACION * 100) + UMBRAL_DOCK;
+    apto       = tamanoValido y (scoreTotal >= UMBRAL_DOCK);
+\/

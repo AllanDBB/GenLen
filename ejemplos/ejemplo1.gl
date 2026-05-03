@@ -3,7 +3,7 @@
 
 lab Ejemplo1
 /\
-    muestra gen1 : adn = adn 'ATGCGT';
+    muestra gen1 : adn = adn 'ATGCT'; 
     muestra arn1 : arn;
 
     arn1 = gen1->transcribir();

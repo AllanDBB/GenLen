@@ -1,0 +1,36 @@
+// ejemplo9.gl - Alineamiento múltiple y comparación de secuencias ADN
+// Cubre: múltiples cadenas adn, encadenamiento de mecanismos, comparaciones
+
+lab AlineamientoMultiple
+/\
+    // Secuencias ADN de distintos organismos
+    muestra humano  : adn = adn 'ATGCGTACGATCGT';
+    muestra raton   : adn = adn 'ATGCGTACGATCAT';
+    muestra conejo  : adn = adn 'ATGCATACGATCGT';
+
+    // Alineamiento por pares
+    humano->alinear(raton);
+    humano->alinear(conejo);
+    raton->alinear(conejo);
+
+    // Calcular similitud usando longitudes como proxy numérico
+    muestra longH : num = 14;
+    muestra longR : num = 14;
+    muestra longC : num = 14;
+
+    muestra igualesHR : bool;
+    muestra igualesHC : bool;
+    muestra igualesRC : bool;
+
+    igualesHR = (longH == longR);
+    igualesHC = (longH == longC);
+    igualesRC = (longR == longC);
+
+    // Todas tienen la misma longitud, el alineamiento es perfecto
+    muestra alineamientoPerfecto : bool;
+    alineamientoPerfecto = igualesHR y igualesHC y igualesRC;
+
+    // Modelado estructural de la secuencia humana
+    muestra modeloHumano : prot;
+    modeloHumano = humano->transcribir()->traducir()->modelar();
+\/
