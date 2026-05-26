@@ -1,0 +1,51 @@
+// errores_sintacticos.gl - Archivo con errores sintacticos intencionales
+// Usado para demostrar el manejo de errores del analizador (parser LL(1))
+//
+// Cada bloque ilustra uno de los 5 tipos de errores detectados:
+//   1. Token esperado faltante           (_verificar)
+//   2. Instruccion no reconocida         (_analizar_instruccion)
+//   3. Cola de instruccion invalida      (_analizar_instruccion_expr)
+//   4. Expresion invalida                (_analizar_expr_primaria)
+//   5. Cadena genetica faltante          (_analizar_cadena_genetica)
+
+lab LabErroresSintacticos
+/\
+    // Error 1: falta ':' en declaracion (token esperado faltante)
+    muestra gen1 adn;
+
+    // Error 2: falta ';' al final de la declaracion
+    muestra gen2 : adn = adn 'ATGC'
+
+    // Error 3: numero al inicio de instruccion (instruccion no reconocida)
+    123 = 5;
+
+    // Error 4: tras identificador no hay '=' '(' ni '->' (cola invalida)
+    gen3 + 1;
+
+    // Error 5: expresion vacia tras '=' (expresion invalida)
+    muestra gen4 : num = ;
+
+    // Error 6: operador binario sin operando izquierdo
+    muestra gen5 : num = * 5;
+
+    // Error 7: parentesis sin cerrar en expresion
+    muestra gen6 : num = (5 + 3;
+
+    // Error 8: falta literal genetico tras prefijo de tipo
+    muestra gen7 : adn = adn 42;
+
+    // Error 9: falta MECANISMO tras '->'
+    muestra gen8 : adn = adn 'ATGC';
+    gen8->();
+
+    // Error 10: falta ')' en llamada a protocolo
+    protocolo demo(x: adn)
+    /\
+        muestra interno : num = 0;
+    \/
+    demo(gen8;
+
+    // Recuperacion: tras los errores anteriores, esta declaracion valida
+    // debe parsearse correctamente gracias al modo panico
+    muestra valida : num = 7;
+\/

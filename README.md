@@ -25,7 +25,8 @@ GenLen/
 │   ├── ejemplo1.gl           # Declarar y transcribir una secuencia ADN
 │   ├── ejemplo2.gl           # Protocolo con edición CRISPR y traducción
 │   ├── ejemplo3.gl           # Operadores, booleanos y llamadas encadenadas
-│   └── errores.gl            # Archivo con errores léxicos intencionales
+│   ├── errores_lexicos.gl    # Archivo con errores léxicos intencionales
+│   └── errores_sintacticos.gl # Archivo con errores sintácticos intencionales
 │
 ├── main.py                   # Punto de entrada principal
 └── README.md
