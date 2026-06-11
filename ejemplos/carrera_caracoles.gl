@@ -1,0 +1,56 @@
+// carrera_caracoles.gl - Programa de demostración para GenLen
+// Simula una carrera genética entre tres caracoles.
+// Cada caracol tiene un ADN de partida; se muta, transcribe y traduce
+// para obtener la "proteína de velocidad" de cada ronda.
+
+lab CarreraCaracoles
+/\
+    // ── Caracoles participantes ──────────────────────────────────────────
+    muestra caracol1 : adn = adn 'ATGCTTGACCGTA';
+    muestra caracol2 : adn = adn 'GGATCCATGCGTA';
+    muestra caracol3 : adn = adn 'CCTAGTCGATAGC';
+
+    // ── Protocolo: una vuelta de carrera ─────────────────────────────────
+    // Muta el ADN del caracol, lo transcribe a ARN, traduce a proteína
+    // y muestra el resultado (la "velocidad" de esa ronda).
+    protocolo correr(gen : adn)
+    /\
+        muestra paso    : adn;
+        muestra arnRonda: arn;
+        muestra vel     : prot;
+
+        paso     = gen->mutar();
+        arnRonda = paso->transcribir();
+        vel      = arnRonda->traducir();
+        vel->mostrar();
+    \/
+
+    // ── Protocolo: editar y correr con guía CRISPR ────────────────────────
+    protocolo correrConCrispr(gen : adn, guia : adn)
+    /\
+        muestra genEditado : adn;
+        muestra arnEditado : arn;
+        muestra velEditada : prot;
+
+        genEditado = gen->cas9(guia)->mutar();
+        arnEditado = genEditado->transcribir();
+        velEditada = arnEditado->traducir();
+        velEditada->mostrar();
+    \/
+
+    // ── Ronda 1: carrera clásica ──────────────────────────────────────────
+    correr(caracol1);
+    correr(caracol2);
+    correr(caracol3);
+
+    // ── Ronda 2: carrera con edición CRISPR ──────────────────────────────
+    muestra guia : adn = adn 'CGTA';
+
+    correrConCrispr(caracol1, guia);
+    correrConCrispr(caracol2, guia);
+
+    // ── Métricas: alineamiento entre caracol 1 y 2 ───────────────────────
+    muestra conservado : adn;
+    conservado = caracol1->alinear(caracol2);
+    conservado->mostrar();
+\/
