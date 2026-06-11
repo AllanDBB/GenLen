@@ -36,6 +36,7 @@ TIPOS: set[str] = {"adn", "arn", "prot", "num", "bool"}
 MECANISMOS: set[str] = {
     "transcribir", "traducir", "mutar",
     "cas9", "alinear", "modelar", "docking",
+    "mostrar",
 }
 
 # Literales booleanos

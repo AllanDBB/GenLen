@@ -17,6 +17,7 @@ Curso: Compiladores e Interpretes
 
 from __future__ import annotations
 from enum import Enum
+from typing import Optional
 
 
 # ---------------------------------------------------------------------------
@@ -115,6 +116,9 @@ class Nodo:
         self.hijos: list[Nodo] = []
         self.linea: int       = linea
         self.columna: int     = columna
+        # Campos de decorado (rellenados por el Verificador)
+        self.tipo_dato: Optional[str]  = None
+        self.definicion: Optional[Nodo] = None
 
     # ------------------------------------------------------------------
     # Mutación
@@ -133,22 +137,30 @@ class Nodo:
             return f"Nodo({self.tipo.value}, '{self.contenido}')"
         return f"Nodo({self.tipo.value})"
 
-    def imprimir(self, nivel: int = 0) -> str:
+    def imprimir(self, nivel: int = 0, decorado: bool = False) -> str:
         """
         Retorna una representación textual con sangría del árbol.
 
-        Ejemplo:
-            PROGRAMA  [Ejemplo1]
-              CUERPO
-                DECLARACION  [gen1]
-                  TIPO  [adn]
-                  CADENA_ADN  [ATGCT]
+        Con decorado=True muestra también el tipo inferido y la referencia
+        a la definición de cada nodo (formato <tipo_dato, def@L:C>).
         """
         sangria = "  " * nivel
         info = self.tipo.value
         if self.contenido:
             info += f"  [{self.contenido}]"
+
+        if decorado:
+            partes = []
+            if self.tipo_dato:
+                partes.append(f"tipo:{self.tipo_dato}")
+            if self.definicion is not None:
+                partes.append(
+                    f"def@{self.definicion.linea}:{self.definicion.columna}"
+                )
+            if partes:
+                info += f"  <{', '.join(partes)}>"
+
         lineas: list[str] = [f"{sangria}{info}"]
         for hijo in self.hijos:
-            lineas.append(hijo.imprimir(nivel + 1))
+            lineas.append(hijo.imprimir(nivel + 1, decorado))
         return "\n".join(lineas)
