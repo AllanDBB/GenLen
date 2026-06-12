@@ -23,6 +23,7 @@ lab Ejemplo6
         mensajero->traducir();
     \/
 
-    // Llamada al protocolo encadenando resultado
-    resultado = procesarGen(genInicial, corte1, corte2);
+    // Llamada al protocolo y calculo del resultado final
+    procesarGen(genInicial, corte1, corte2);
+    resultado = genInicial->cas9(corte1)->cas9(corte2)->mutar()->transcribir()->traducir();
 \/

@@ -16,5 +16,6 @@ lab Ejemplo3
         mensajero->traducir();
     \/
 
-    resultado = editarYTraducir(genBase, adn 'TAGCTA');
+    editarYTraducir(genBase, adn 'TAGCTA');
+    resultado = genBase->cas9(adn 'TAGCTA')->transcribir()->traducir();
 \/

@@ -22,8 +22,8 @@ lab Ejemplo4
     genMutado = genBase->mutar();
 
     // Comparacion de igualdad
-    muestra iguales : num;
-    muestra distintos : num;
+    muestra iguales : bool;
+    muestra distintos : bool;
 
     iguales   = (tasa == 3.14);
     distintos = (tasa != 2.71);

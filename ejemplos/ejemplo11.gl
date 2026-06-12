@@ -33,8 +33,10 @@ lab ComposicionProtocolos
         editarGen(secuencia, guia);
         dogmaCentral(secuencia);
 
+        editada  = secuencia->cas9(guia);
+        proteina = secuencia->transcribir()->traducir();
         modelada = proteina->modelar();
-        modelada->docking(editada);
+        modelada->docking(proteina);
     \/
 
     // ── Programa principal ───────────────────────────────────────────────

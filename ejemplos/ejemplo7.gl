@@ -5,12 +5,12 @@ lab Ejemplo7
 /\
     muestra temp : num = 37;
     muestra presion : num = 120;
-    muestra alerta : num;
+    muestra alerta : bool;
     
     // Alerta si hay fiebre O presion alta
     alerta = (temp > 38) o (presion > 130);
     
     // Expresión con y/o combinados
-    muestra riesgo : num;
+    muestra riesgo : bool;
     riesgo = (temp > 39) y (presion > 140) o (temp > 38) y (presion > 135);
 \/

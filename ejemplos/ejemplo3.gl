@@ -20,13 +20,13 @@ lab Ejemplo5
     // Expresión booleana con operadores lógicos
     muestra flag1 : num = 5;
     muestra flag2 : num = 10;
-    muestra ok    : num;
+    muestra ok    : bool;
 
     ok = (flag1 < flag2) y (flag2 > 0);
 
     // Uso de booleano literal
-    muestra activo : num = V;
-    muestra pasivo : num = F;
+    muestra activo : bool = V;
+    muestra pasivo : bool = F;
 
     // Alineamiento de dos secuencias ADN
     muestra secA : adn = adn 'ATGCTGT';

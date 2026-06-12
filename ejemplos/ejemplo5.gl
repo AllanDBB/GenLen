@@ -6,8 +6,8 @@ lab Ejemplo5
     // Comparaciones relacionales >= y <=
     muestra x : num = 10;
     muestra b : num = 10;
-    muestra mayorOIgual : num;
-    muestra menorOIgual : num;
+    muestra mayorOIgual : bool;
+    muestra menorOIgual : bool;
 
     mayorOIgual = (x >= b);
     menorOIgual = (x <= b);

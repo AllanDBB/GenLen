@@ -12,6 +12,6 @@ lab Ejemplo8
     
     // Comparación de dos proteínas
     muestra otra : prot = prot 'MKLV';
-    muestra iguales : num;
+    muestra iguales : bool;
     iguales = (resultado == otra);
 \/
