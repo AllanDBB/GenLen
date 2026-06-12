@@ -29,6 +29,7 @@ class EntradaSimbolo:
     tipo: str        # 'adn' | 'arn' | 'prot' | 'num' | 'bool' | 'protocolo'
     nodo_def: Nodo
     nivel: int       # profundidad del alcance donde se definió
+    parametros: tuple[tuple[str, str], ...] = ()
 
 
 # ---------------------------------------------------------------------------
@@ -52,8 +53,16 @@ class TablaSimbolo:
         if len(self._alcances) > 1:
             self._alcances.pop()
 
-    def definir(self, nombre: str, tipo: str, nodo_def: Nodo) -> None:
-        self._alcances[-1][nombre] = EntradaSimbolo(nombre, tipo, nodo_def, self.nivel)
+    def definir(
+        self,
+        nombre: str,
+        tipo: str,
+        nodo_def: Nodo,
+        parametros: tuple[tuple[str, str], ...] = (),
+    ) -> None:
+        self._alcances[-1][nombre] = EntradaSimbolo(
+            nombre, tipo, nodo_def, self.nivel, parametros
+        )
 
     def buscar(self, nombre: str) -> Optional[EntradaSimbolo]:
         for alcance in reversed(self._alcances):
@@ -147,6 +156,17 @@ class Verificador:
         "mostrar":     (None,   None),   # mismo tipo, imprime
     }
 
+    _MECANISMO_ARIDAD: dict[str, int] = {
+        "transcribir": 0,
+        "traducir":    0,
+        "mutar":       0,
+        "cas9":        1,
+        "alinear":     1,
+        "modelar":     0,
+        "docking":     1,
+        "mostrar":     0,
+    }
+
     def __init__(self) -> None:
         self.tabla   = TablaSimbolo()
         self.errores: list[str] = []
@@ -234,6 +254,11 @@ class Verificador:
 
     def _visitar_protocolo(self, nodo: Nodo) -> None:
         nombre = nodo.contenido
+        lista_params = nodo.hijos[0]   # LISTA_PARAMS
+        firma = tuple(
+            (param.contenido, param.hijos[0].contenido)
+            for param in lista_params.hijos
+        )
 
         if self.tabla.esta_en_alcance_actual(nombre):
             self._error(
@@ -241,18 +266,23 @@ class Verificador:
                 nodo.linea, nodo.columna,
             )
         else:
-            self.tabla.definir(nombre, "protocolo", nodo)
+            self.tabla.definir(nombre, "protocolo", nodo, firma)
             self._mostrar_tabla(f"+ protocolo '{nombre}'")
 
         # Nuevo alcance para el cuerpo del protocolo
         self.tabla.entrar_alcance()
 
-        lista_params = nodo.hijos[0]   # LISTA_PARAMS
         for param in lista_params.hijos:
             pnom  = param.contenido
             ptipo = param.hijos[0].contenido
-            self.tabla.definir(pnom, ptipo, param)
             param.tipo_dato = ptipo
+            if self.tabla.esta_en_alcance_actual(pnom):
+                self._error(
+                    f"Parámetro '{pnom}' ya declarado en este protocolo",
+                    param.linea, param.columna,
+                )
+            else:
+                self.tabla.definir(pnom, ptipo, param)
 
         if lista_params.hijos:
             self._mostrar_tabla(f"Parámetros de '{nombre}'")
@@ -295,6 +325,8 @@ class Verificador:
     def _visitar_llamada_protocolo(self, nodo: Nodo) -> Optional[str]:
         nombre  = nodo.contenido
         entrada = self.tabla.buscar(nombre)
+        args = nodo.hijos[0]
+        arg_tipos = [self._visitar(arg) for arg in args.hijos]
 
         if entrada is None:
             self._error(
@@ -308,11 +340,24 @@ class Verificador:
             )
         else:
             nodo.definicion = entrada.nodo_def
+            params = entrada.parametros
+            if len(arg_tipos) != len(params):
+                self._error(
+                    f"Protocolo '{nombre}' espera {len(params)} argumento(s), "
+                    f"se recibió {len(arg_tipos)}",
+                    nodo.linea, nodo.columna,
+                )
+            else:
+                for i, ((pnom, ptipo), atipo) in enumerate(zip(params, arg_tipos), 1):
+                    if atipo and atipo != ptipo:
+                        self._error(
+                            f"Argumento {i} de '{nombre}' ('{pnom}') debe ser "
+                            f"'{ptipo}', se recibió '{atipo}'",
+                            args.hijos[i - 1].linea,
+                            args.hijos[i - 1].columna,
+                        )
 
-        for hijo in nodo.hijos:
-            self._visitar(hijo)
-
-        return None   # los protocolos son void
+        return "void"   # los protocolos son void
 
     # -----------------------------------------------------------------------
     # Llamada a mecanismo
@@ -348,6 +393,14 @@ class Verificador:
             return None
 
         tipo_esperado_rec, tipo_resultado = self._MECANISMO[mec]
+        aridad_esperada = self._MECANISMO_ARIDAD[mec]
+
+        if len(args) != aridad_esperada:
+            self._error(
+                f"'{mec}()' espera {aridad_esperada} argumento(s), "
+                f"se recibió {len(args)}",
+                nodo.linea, nodo.columna,
+            )
 
         if tipo_esperado_rec is not None and rec and rec != tipo_esperado_rec:
             self._error(
