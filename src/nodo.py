@@ -144,23 +144,46 @@ class Nodo:
         Con decorado=True muestra también el tipo inferido y la referencia
         a la definición de cada nodo (formato <tipo_dato, def@L:C>).
         """
-        sangria = "  " * nivel
-        info = self.tipo.value
-        if self.contenido:
-            info += f"  [{self.contenido}]"
+        def _info(nodo: Nodo) -> str:
+            texto = nodo.tipo.value
+            if nodo.contenido:
+                texto += f"  [{nodo.contenido}]"
 
-        if decorado:
-            partes = []
-            if self.tipo_dato:
-                partes.append(f"tipo:{self.tipo_dato}")
-            if self.definicion is not None:
-                partes.append(
-                    f"def@{self.definicion.linea}:{self.definicion.columna}"
+            if decorado:
+                partes = []
+                if nodo.tipo_dato:
+                    partes.append(f"tipo:{nodo.tipo_dato}")
+                if nodo.definicion is not None:
+                    partes.append(
+                        f"def@{nodo.definicion.linea}:{nodo.definicion.columna}"
+                    )
+                if partes:
+                    texto += f"  <{', '.join(partes)}>"
+            return texto
+
+        def _imprimir(
+            nodo: Nodo,
+            prefijo: str,
+            es_ultimo: bool,
+            raiz: bool,
+        ) -> list[str]:
+            if raiz:
+                lineas = [_info(nodo)]
+                prefijo_hijos = ""
+            else:
+                rama = "└── " if es_ultimo else "├── "
+                lineas = [prefijo + rama + _info(nodo)]
+                prefijo_hijos = prefijo + ("    " if es_ultimo else "│   ")
+
+            for i, hijo in enumerate(nodo.hijos):
+                lineas.extend(
+                    _imprimir(
+                        hijo,
+                        prefijo_hijos,
+                        i == len(nodo.hijos) - 1,
+                        False,
+                    )
                 )
-            if partes:
-                info += f"  <{', '.join(partes)}>"
+            return lineas
 
-        lineas: list[str] = [f"{sangria}{info}"]
-        for hijo in self.hijos:
-            lineas.append(hijo.imprimir(nivel + 1, decorado))
-        return "\n".join(lineas)
+        return "\n".join(_imprimir(self, "  " * nivel, True, nivel == 0))
