@@ -167,19 +167,22 @@ class Verificador:
         "mostrar":     0,
     }
 
-    def __init__(self) -> None:
+    def __init__(self, verbose: bool = True) -> None:
         self.tabla   = TablaSimbolo()
         self.errores: list[str] = []
+        self._verbose = verbose
 
     # -----------------------------------------------------------------------
     # Interfaz pública
     # -----------------------------------------------------------------------
 
-    def verificar(self, ast: Nodo) -> None:
-        print("\n" + "─" * 60)
-        print("  Iniciando verificación semántica")
-        print("─" * 60)
+    def verificar(self, ast: Nodo) -> Nodo:
+        if self._verbose:
+            print("\n" + "─" * 60)
+            print("  Iniciando verificación semántica")
+            print("─" * 60)
         self._visitar(ast)
+        return ast
 
     # -----------------------------------------------------------------------
     # Helpers
@@ -190,6 +193,8 @@ class Verificador:
         self.errores.append(texto)
 
     def _mostrar_tabla(self, etiqueta: str = "") -> None:
+        if not self._verbose:
+            return
         if etiqueta:
             print(f"\n  [{etiqueta}]")
         print(self.tabla.imprimir())
