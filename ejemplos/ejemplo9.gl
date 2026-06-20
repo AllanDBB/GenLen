@@ -33,4 +33,5 @@ lab AlineamientoMultiple
     // Modelado estructural de la secuencia humana
     muestra modeloHumano : prot;
     modeloHumano = humano->transcribir()->traducir()->modelar();
+    modeloHumano->mostrar();
 \/

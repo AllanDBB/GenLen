@@ -43,4 +43,5 @@ lab ClasificacionMuestras
 
     arnMuestra  = genMuestra->transcribir();
     protMuestra = arnMuestra->traducir();
+    protMuestra->mostrar();
 \/

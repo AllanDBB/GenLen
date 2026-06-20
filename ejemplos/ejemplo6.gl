@@ -26,4 +26,5 @@ lab Ejemplo6
     // Llamada al protocolo y calculo del resultado final
     procesarGen(genInicial, corte1, corte2);
     resultado = genInicial->cas9(corte1)->cas9(corte2)->mutar()->transcribir()->traducir();
+    resultado->mostrar();
 \/

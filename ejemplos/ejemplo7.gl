@@ -13,4 +13,5 @@ lab Ejemplo7
     // Expresión con y/o combinados
     muestra riesgo : bool;
     riesgo = (temp > 39) y (presion > 140) o (temp > 38) y (presion > 135);
+    riesgo->mostrar();
 \/

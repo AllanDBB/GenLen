@@ -31,4 +31,5 @@ lab Ejemplo5
     muestra sitio : prot = prot 'ACDE';
 
     sitio->docking(modelo);
+    modelo->mostrar();
 \/

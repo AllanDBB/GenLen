@@ -18,4 +18,5 @@ lab Ejemplo3
 
     editarYTraducir(genBase, adn 'TAGCTA');
     resultado = genBase->cas9(adn 'TAGCTA')->transcribir()->traducir();
+    resultado->mostrar();
 \/

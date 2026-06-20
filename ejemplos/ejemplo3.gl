@@ -33,4 +33,5 @@ lab Ejemplo5
     muestra secB : adn = adn 'ATGAGT';
 
     secA->alinear(secB);
+    proteinaFinal->mostrar();
 \/

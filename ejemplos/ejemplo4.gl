@@ -27,4 +27,5 @@ lab Ejemplo4
 
     iguales   = (tasa == 3.14);
     distintos = (tasa != 2.71);
+    genMutado->mostrar();
 \/

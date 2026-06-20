@@ -44,4 +44,5 @@ lab ComposicionProtocolos
     muestra guia1 : adn = adn 'CGTAGC';
 
     analizarExpresion(gen1, guia1);
+    gen1->mostrar();
 \/

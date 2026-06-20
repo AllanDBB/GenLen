@@ -7,4 +7,5 @@ lab Ejemplo1
     muestra arn1 : arn;
 
     arn1 = gen1->transcribir();
+    arn1->mostrar();
 \/

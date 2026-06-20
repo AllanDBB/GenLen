@@ -78,4 +78,5 @@ lab PipelineGenetico
 
     scoreTotal = tamanoScore - (TASA_MUTACION * 100) + UMBRAL_DOCK;
     apto       = tamanoValido y (scoreTotal >= UMBRAL_DOCK);
+    apto->mostrar();
 \/
