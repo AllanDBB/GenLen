@@ -1,0 +1,74 @@
+// errores_semanticos.gl - Archivo con errores semanticos intencionales
+// Usado para demostrar el manejo de errores del verificador (checker)
+//
+// Cada bloque ilustra uno de los errores detectados por el Verificador:
+//   1.  Variable ya declarada en el alcance      (_visitar_declaracion)
+//   2.  Variable no declarada en asignacion       (_visitar_asignacion)
+//   3.  Tipo incompatible en inicializacion        (_visitar_declaracion)
+//   4.  Tipo incompatible en asignacion            (_visitar_asignacion)
+//   5.  Identificador no declarado en expresion    (_visitar_identificador)
+//   6.  Protocolo no declarado                     (_visitar_llamada_protocolo)
+//   7.  Aridad incorrecta en llamada a protocolo   (_visitar_llamada_protocolo)
+//   8.  Tipo de argumento incorrecto en protocolo  (_visitar_llamada_protocolo)
+//   9.  Receptor de mecanismo con tipo equivocado  (_inferir_mecanismo)
+//   10. Aridad incorrecta en mecanismo             (_inferir_mecanismo)
+//   11. Operando aritmetico no numerico            (_visitar_binaria)
+//   12. Operandos de comparacion de tipos distintos(_visitar_binaria)
+//   13. Operando logico no booleano                (_visitar_binaria)
+
+lab LabErroresSemanticos
+/\
+    muestra gen1 : adn = adn 'ATGC';
+
+    // Error 1: 'gen1' ya declarada en este alcance
+    muestra gen1 : num;
+
+    // Error 2: 'noExiste' no declarada antes de asignarle
+    noExiste = 5;
+
+    // Error 3: inicializacion incompatible (num declarado, adn asignado)
+    muestra contador : num = adn 'ATGC';
+
+    // Error 4: asignacion incompatible (num declarado, se asigna bool)
+    muestra bandera : num;
+    bandera = V;
+
+    // Error 5: identificador no declarado dentro de una expresion
+    muestra suma : num;
+    suma = fantasma + 1;
+
+    // Error 6: protocolo no declarado
+    procesarInexistente(gen1);
+
+    // Error 7: aridad incorrecta (protocolo espera 1, se pasan 2)
+    protocolo editar(secuencia : adn)
+    /\
+        muestra temporal : adn;
+        temporal = secuencia->mutar();
+    \/
+    editar(gen1, gen1);
+
+    // Error 8: tipo de argumento incorrecto (espera adn, se pasa num)
+    muestra valor : num = 7;
+    editar(valor);
+
+    // Error 9: receptor de tipo equivocado (traducir requiere arn, gen1 es adn)
+    muestra proteina : prot;
+    proteina = gen1->traducir();
+
+    // Error 10: aridad incorrecta de mecanismo (cas9 espera 1 argumento)
+    muestra editado : adn;
+    editado = gen1->cas9();
+
+    // Error 11: operando aritmetico no numerico (adn en una suma)
+    muestra invalido : num;
+    invalido = gen1 + 1;
+
+    // Error 12: comparacion entre tipos distintos (num vs adn)
+    muestra comparacion : bool;
+    comparacion = (valor == gen1);
+
+    // Error 13: operando logico no booleano (num con 'y')
+    muestra logico : bool;
+    logico = valor y V;
+\/
