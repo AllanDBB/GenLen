@@ -1,20 +1,6 @@
 // errores_semanticos.gl - Archivo con errores semanticos intencionales
 // Usado para demostrar el manejo de errores del verificador (checker)
 //
-// Cada bloque ilustra uno de los errores detectados por el Verificador:
-//   1.  Variable ya declarada en el alcance      (_visitar_declaracion)
-//   2.  Variable no declarada en asignacion       (_visitar_asignacion)
-//   3.  Tipo incompatible en inicializacion        (_visitar_declaracion)
-//   4.  Tipo incompatible en asignacion            (_visitar_asignacion)
-//   5.  Identificador no declarado en expresion    (_visitar_identificador)
-//   6.  Protocolo no declarado                     (_visitar_llamada_protocolo)
-//   7.  Aridad incorrecta en llamada a protocolo   (_visitar_llamada_protocolo)
-//   8.  Tipo de argumento incorrecto en protocolo  (_visitar_llamada_protocolo)
-//   9.  Receptor de mecanismo con tipo equivocado  (_inferir_mecanismo)
-//   10. Aridad incorrecta en mecanismo             (_inferir_mecanismo)
-//   11. Operando aritmetico no numerico            (_visitar_binaria)
-//   12. Operandos de comparacion de tipos distintos(_visitar_binaria)
-//   13. Operando logico no booleano                (_visitar_binaria)
 
 lab LabErroresSemanticos
 /\
