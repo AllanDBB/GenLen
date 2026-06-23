@@ -1,0 +1,43 @@
+// Experimento: efecto de cas9 sobre tres genes.
+// cas9 busca la guía en el gen y la corta si la encuentra.
+// Salida: primero la proteína de referencia; luego, por cada gen:
+// huboCorte, proteina y proteinaBuscada
+
+lab DiagnosticoGenetico
+/\
+    muestra genReferencia : adn  = adn 'ATGCTTGAC';
+    muestra guiaCorte    : adn  = adn 'CGT';
+    muestra proteinaMeta : prot =  genReferencia->transcribir()->traducir();
+    proteinaMeta->mostrar();
+
+    muestra genConGuia : adn = adn 'ATGCTTGACCGT';
+    muestra genSinGuia : adn = adn 'ATGCTTGACTGT';
+    muestra genMutado  : adn = genReferencia->mutar();
+
+    protocolo procesar(
+        gen : adn,
+        referencia : adn,
+        guia : adn,
+        objetivo : prot
+    )
+    /\
+        muestra genEditado : adn = gen->cas9(guia);
+        muestra transcrito : arn = genEditado->transcribir();
+        muestra proteina   : prot = transcrito->traducir();
+        muestra huboCorte       : bool = genEditado != gen;
+        muestra proteinaBuscada : bool = proteina == objetivo;
+
+        huboCorte->mostrar();
+        proteina->mostrar();
+        proteinaBuscada->mostrar();
+    \/
+
+    // Contiene la guía, cas9 la corta y produce la proteína buscada.
+    procesar(genConGuia, genReferencia, guiaCorte, proteinaMeta);
+
+    // No contiene la guía, cas9 no corta y produce otra proteína.
+    procesar(genSinGuia, genReferencia, guiaCorte, proteinaMeta);
+
+    // Mutación aleatoria, el resultado cambia en cada corrida.
+    procesar(genMutado, genReferencia, guiaCorte, proteinaMeta);
+\/
